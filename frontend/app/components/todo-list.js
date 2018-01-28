@@ -1,27 +1,29 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, get, set } from '@ember/object';
+import { inject as service } from '@ember/service';
 
-export default Ember.Component.extend({
-	repo: Ember.inject.service(),
+export default Component.extend({
+	repo: service(),
 	tagName: 'section',
 	elementId: 'main',
 	canToggle: true,
-	allCompleted: Ember.computed('todos.@each.completed', function () {
-		return this.get('todos').isEvery('completed');
+	allCompleted: computed('todos.@each.completed', function () {
+		return get(this, 'todos').isEvery('completed');
 	}),
 
 	actions: {
 		enableToggle() {
-			this.set('canToggle', true);
+			set(this, 'canToggle', true);
 		},
 
 		disableToggle() {
-			this.set('canToggle', false);
+			set(this, 'canToggle', false);
 		},
 
 		toggleAll() {
-			let allCompleted = this.get('allCompleted');
-			this.get('todos').forEach(todo => Ember.set(todo, 'completed', !allCompleted));
-			this.get('repo').persist();
+			let allCompleted = get(this, 'allCompleted');
+			get(this, 'todos').forEach(todo => set(todo, 'completed', !allCompleted));
+			get(this, 'repo').persist();
 		}
 	}
 });
