@@ -1,6 +1,8 @@
 class CreateTodos < ActiveRecord::Migration[5.1]
   def change
-    create_table :todos, id: :string do |t|
+    enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
+    
+    create_table :todos, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.string :title
       t.boolean :completed
 

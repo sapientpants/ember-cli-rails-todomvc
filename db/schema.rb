@@ -12,12 +12,15 @@
 
 ActiveRecord::Schema.define(version: 20180127193543) do
 
-  create_table "todos", id: :string, force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "pgcrypto"
+
+  create_table "todos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.boolean "completed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["id"], name: "sqlite_autoindex_todos_1", unique: true
   end
 
 end
