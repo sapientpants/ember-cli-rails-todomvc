@@ -3,7 +3,7 @@ require 'test_helper'
 class TodosControllerTest < ActionDispatch::IntegrationTest
   def raw_todo_json(todo)
     json = <<-JSON
-      {"id":"#{todo.id}","type":"todos","links":{"self":"http://www.example.com/api/todos/#{todo.id}"},"attributes":{"description":"#{todo.description}","completed":#{todo.completed.nil? ? 'null' : todo.completed},"created-at":#{todo.created_at.present? ? '"' + todo.created_at.iso8601(n=3) + '"' : 'null'}}}
+      {"id":"#{todo.id}","type":"todos","links":{"self":"http://www.example.com/api/todos/#{todo.id}"},"attributes":{"title":"#{todo.title}","completed":#{todo.completed.nil? ? 'null' : todo.completed},"created-at":#{todo.created_at.present? ? '"' + todo.created_at.iso8601(n=3) + '"' : 'null'}}}
     JSON
     json.strip
   end
@@ -36,13 +36,13 @@ class TodosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create todo' do
-    description = "New todo - #{SecureRandom.hex}"
+    title = "New todo - #{SecureRandom.hex}"
     assert_difference('Todo.count') do
       post api_todos_url, params: {
         data: {
           type: 'todos',
           attributes: {
-            description: description
+            title: title
           }
         }
       },
@@ -56,7 +56,7 @@ class TodosControllerTest < ActionDispatch::IntegrationTest
     assert_response :created
 
     new_todo = Todo.order('created_at desc').first
-    assert_equal(new_todo.description, description)
+    assert_equal(new_todo.title, title)
 
     assert_equal todo_json(new_todo), @response.body
   end
@@ -68,13 +68,13 @@ class TodosControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update todo' do
     completed = true
-    description = "Updated todo - #{SecureRandom.hex}"    
+    title = "Updated todo - #{SecureRandom.hex}"    
     patch api_todo_url(@todo), params: { 
       data: {
         type: 'todos',
         id: @todo.id,
         attributes: {
-          description: description,
+          title: title,
           completed: true
         }
       }
@@ -87,7 +87,7 @@ class TodosControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     @todo.reload
-    assert_equal description, @todo.description
+    assert_equal title, @todo.title
     assert @todo.completed
   end
 

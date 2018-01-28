@@ -1,11 +1,9 @@
 import Component from '@ember/component';
-import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import { scheduleOnce } from '@ember/runloop';
 import { get, set } from '@ember/object';
 
 export default Component.extend({
-	repo: service(),
 	tagName: 'li',
 	editing: false,
 	classNameBindings: ['todo.completed', 'editing'],
@@ -39,11 +37,12 @@ export default Component.extend({
 		toggleCompleted(e) {
 			let todo = get(this, 'todo');
 			set(todo, 'completed', e.target.checked);
-			get(this, 'repo').persist();
+			todo.save();
 		},
 
 		removeTodo() {
-			get(this, 'repo').delete(get(this, 'todo'));
+			let todo = get(this, 'todo');
+			todo.destroyRecord();
 		}
 	},
 

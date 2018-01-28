@@ -1,5 +1,5 @@
 class Api::TodoResource < JSONAPI::Resource
   model_name 'Todo'
 
-  attributes :description, :completed, :created_at
+  attributes :title, :completed, :created_at
 end

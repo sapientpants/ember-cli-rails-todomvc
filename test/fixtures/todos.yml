@@ -2,10 +2,10 @@
 
 one:
   id: <%= SecureRandom.uuid %>
-  description: TodoOne
+  title: TodoOne
   completed: false
 
 two:
   id: <%= SecureRandom.uuid %>
-  description: TodoTwo
+  title: TodoTwo
   completed: false
