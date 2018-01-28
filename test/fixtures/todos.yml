@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: <%= SecureRandom.uuid %>
+  description: TodoOne
+  completed: false
+
+two:
+  id: <%= SecureRandom.uuid %>
+  description: TodoTwo
+  completed: false
