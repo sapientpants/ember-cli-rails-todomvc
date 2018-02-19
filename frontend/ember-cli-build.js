@@ -18,10 +18,7 @@ module.exports = function(defaults) {
   // If the library that you are including contains AMD or ES6
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
-	// along with the exports of each module as its value.
-	
-	app.import('vendor/base.css');
-	app.import('vendor/index.css');
+  // along with the exports of each module as its value.
 
   return app.toTree();
 };
